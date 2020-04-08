@@ -1,0 +1,77 @@
+@charset 'utf-8';
+/* CSS Document */
+html,body,ul,ol,p,dl,dt,dd,h1,h2,h3,h4,h5,h6,form{
+	margin: 0;
+	padding: 0;
+}
+html,body{width: 100%; height: 100%; }
+body{
+	-ms-user-select:none;
+	user-select:none;
+}
+ul,ol { list-style: none;}
+select,
+input,
+button,
+textarea {
+	padding: 0;
+	border: 0;
+	outline: none;
+	color: inherit;
+	font-family: inherit;
+	font-size: 100%;
+	background-color: transparent;
+}
+
+button, 
+.btn, 
+.button, 
+[type="button"]{ 
+	cursor:pointer;
+}
+/*ie输入框删除按钮隐藏*/
+/*input::-ms-clear{display: none;}*/
+/*ie下隐藏滚动条，但溢出时透明滚动*/
+.overflowhidden-ie{ -ms-overflow-style:none;}
+em, i{ font-style: normal;}
+a {text-decoration: none;}
+img{
+	max-width:100%;
+	height:auto;
+	vertical-align:middle;	
+}
+table { 
+	border-collapse:collapse; 
+	border-spacing:0; 
+}
+sup { vertical-align:text-top; }
+sub{ vertical-align:text-bottom; }
+::-webkit-input-placeholder { color: #fff;}
+.fl{ float: left; }
+.fr{ float: right; }
+.clearfix:after {
+	content:"";
+	display:block;
+	visibility: hidden;
+	height:0;
+	font-size:0;
+	line-height:0;
+	clear:both;   
+}
+.clearfix{ *zoom:1; } 
+.flex{ display: flex;}
+
+
+/*.select::-ms-expand { display: none;}
+.select{
+	height: 1.25rem;
+	padding-left:.6rem;
+	appearance: none;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	width: 100%;
+	background: url(../Content/images/selectBg.png) no-repeat scroll calc(100% - .55rem) center, url(../Content/images/selectBg2.png) no-repeat  right center;
+	box-sizing:border-box;
+}
+*/
+

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>vuejs开发架构测试</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <canvas id="canvas" tabindex="0"></canvas>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
+
+<script>
+  var canvasMap = null;    
+  //引擎初始化
+  var initProj = function() {
+    canvasMap = Q3D.map("canvas", {
+      SERVER_PATH:
+        "http://192.168.1.222/mapdata3d/jdkss_20200313_purify",
+      DATA_PATH: "D:/vue/mapdata3d/jdkss_20200313_purify",          
+      CONFIG_NAME: "Example",
+      InertiaDuration: 0.5,
+      KEEP_ALIVE: true
+    });
+  }
+
+
+    document.oncontextmenu = function(){return false;}
+</script>
+<!-- <script src="http://localhost:8091/chrome/q3d-src.js"></script> -->
+<!-- <script src="./src/plugins/glue.js"></script>
+<script src="./src/plugins/qmap.js"></script> -->
+
+<script src="./plugins/glue.js"></script>
+<script src="./plugins/qmap.js"></script>
+
+<!-- <script src="http://localhost:8091/chrome/glue.js"></script>
+<script src="http://localhost:8091/chrome/qmap.js"></script> -->
