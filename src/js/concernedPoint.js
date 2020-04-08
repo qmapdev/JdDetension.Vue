@@ -10,7 +10,7 @@ import q3d_common from '../plugins/q3d_common.js'
  */
 const createPointPois = async () => {
     let result = await getPointInfoList('', 1, 1, 100);
-    let data = [...result.data.TotalData];
+    let data = [...result];
     for (let key in data) {
         let dataPos = await data[key].Position.toGlobalVec3d().toLocalPos("kanshousuo");
         let poiObj = {

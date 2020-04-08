@@ -14,7 +14,7 @@ let getPointInfoList = (BuildingName, floor, pageIndex, pageSize) => {
         pageSize: pageSize
       })
       .then(function (response) {
-        resovle(response);
+        resovle(response.data.TotalData);
       })
       .catch(function (error) {
         reject(error);

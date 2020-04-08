@@ -103,8 +103,8 @@ export default {
     async initData() {
       this.points = [];
       let result = await getPointInfoList("", 1, 1, 100);
-      console.log(result.data.TotalData);
-      this.points = [...result.data.TotalData]; // 如果使用箭头函数，this.points定义undefined错误。
+      console.log(result);
+      this.points = [...result]; // 如果使用箭头函数，this.points定义undefined错误。
     }
     /**
      * 另一种写法：

@@ -24,7 +24,7 @@ const removeScenePoi = () => {
  */
 const removeConcernedPointPoi = async () => {
     let result = await getPointInfoList('', 1, 1, 100);
-    let data = [...result.data.TotalData];
+    let data = [...result];
     for (let key in data) {
         var node = Q3D.sceneNode('kanshousuo', data[key].PointName);
         if (node)
