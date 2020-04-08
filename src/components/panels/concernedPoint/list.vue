@@ -89,23 +89,31 @@
 
 <script>
 import { getPointInfoList } from "../../../services/getData.js";
+import { mapState, mapActions } from "vuex";
 export default {
-  name: "list",  
+  name: "list",
   data() {
     return {
       points: []
     };
   },
+  computed: {
+    ...mapState(["concernedPoints"])
+  },
   mounted() {
     this.initData();
   },
   methods: {
+    /**
+     * 通过axios直接获取数据  
+     */   
     async initData() {
       this.points = [];
       let result = await getPointInfoList("", 1, 1, 100);
       console.log(result);
       this.points = [...result]; // 如果使用箭头函数，this.points定义undefined错误。
     }
+    
     /**
      * 另一种写法：
      initData: () =>
@@ -113,6 +121,15 @@ export default {
         .then(result => this.points = result.data.TotalData)
         .catch(err => console.log(err)) 
     */
+    /**
+     * 通过vuex存储，管理状态
+     */
+    // initData() {
+    //   this.points = [];
+    //   let result = this.concernedPoints;
+    //   console.log(result);
+    //   this.points = [...result]; // 如果使用箭头函数，this.points定义undefined错误。
+    // }
   }
 };
 </script>

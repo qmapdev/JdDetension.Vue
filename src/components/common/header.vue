@@ -42,3 +42,22 @@
     </div>
   </div>
 </template>
+
+<script>
+import { mapState, mapActions } from "vuex";
+export default {
+  data() {
+    return {};
+  },
+  mounted() {
+    //获取兴趣点信息
+    this.getConcernedPoints();
+  },
+  computed: {
+    ...mapState(["concernedPoints"])
+  },
+  methods: {
+    ...mapActions(["getConcernedPoints"])
+  }
+};
+</script>
