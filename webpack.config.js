@@ -79,7 +79,21 @@ module.exports = {
                         return "/index.html";
                     }
                 }
-            }
+            },
+            '/jdinterface': {
+                target: 'http://www.51kongkong.com:9099/api/QmapInterface/',
+                pathRewrite: {
+                    "^/jdinterface": ""
+                },
+                changeOrigin: true,
+                secure: false,
+                bypass: function (req, res, proxyOptions) {
+                    if (req.headers.accept.indexOf("html") !== -1) {
+                        console.log("Skipping proxy for browser request.");
+                        return "/index.html";
+                    }
+                }
+            },
         }
     }
 }

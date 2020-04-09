@@ -22,6 +22,24 @@ let getPointInfoList = (BuildingName, floor, pageIndex, pageSize) => {
   })
 }
 
+/**
+ * 获取设备列表
+ */
+let getDeviceInfoList = () => {
+  return new Promise((resovle, reject) => {
+    axios.get('/jdinterface/GetAllCameraListForMap', {
+        floor: 0
+      })
+      .then(function (response) {
+        resovle(response);
+      })
+      .catch(function (error) {
+        reject(error);
+      });
+  })
+}
+
 export {
-  getPointInfoList
+  getPointInfoList,
+  getDeviceInfoList
 }

@@ -51,7 +51,7 @@ export default {
   },
   mounted() {
     //获取兴趣点信息
-    this.getConcernedPoints();
+    // this.getConcernedPoints();
   },
   computed: {
     ...mapState(["concernedPoints"])
