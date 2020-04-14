@@ -16,9 +16,11 @@
           <div class="admin-pic"></div>
           <div class="admin-name">admin</div>
         </button>
-        <button class="header-cancel">
-          <div></div>
-        </button>
+        <router-link :to="{path: '/webEarth'}">
+          <button class="header-cancel">
+            <div></div>
+          </button>
+        </router-link>
       </div>
     </div>
 

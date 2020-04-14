@@ -40,11 +40,11 @@
         </router-link>
       </li>
       <li class="menu-li">
-        <button class="menu-circle" data="巡视线路">
-          <div class="menu-pic"></div>
-        </button>
-        <div class="menu-plate"></div>
-        <div class="menu-name">巡视线路</div>
+          <button class="menu-circle" data="巡视线路">
+            <div class="menu-pic"></div>
+          </button>
+          <div class="menu-plate"></div>
+          <div class="menu-name">巡视线路</div>
       </li>
       <li class="menu-li">
         <router-link :to="{path: '/home'}">
