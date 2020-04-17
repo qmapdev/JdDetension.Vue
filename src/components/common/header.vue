@@ -16,7 +16,7 @@
           <div class="admin-pic"></div>
           <div class="admin-name">admin</div>
         </button>
-        <router-link :to="{path: '/webEarth'}">
+        <router-link :to="{ path: '/webEarth' }">
           <button class="header-cancel" @click="flytoPos">
             <div></div>
           </button>
@@ -57,15 +57,15 @@ export default {
     keepingFlytoPos();
   },
   computed: {
-    ...mapState(["concernedPoints", "fadeOutIsActive"])
+    ...mapState(["concernedPoints", "fadeOutIsActive"]),
   },
   methods: {
     // ...mapActions(["getConcernedPoints",""]),
-    ...mapMutations(["RECORD_FACEOUT_Active"]),
+    ...mapMutations(["RECORD_FACEOUT_ACTIVE"]),
     flytoPos: function() {
-      this.RECORD_FACEOUT_Active(false);
+      this.RECORD_FACEOUT_ACTIVE(false);
       flytoDefaultPos();
-    }
-  }
+    },
+  },
 };
 </script>

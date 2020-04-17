@@ -6,6 +6,7 @@
     <div
       id="cover"
       v-bind:class="['FadeOutFrame', { fadeout: this.isActive }]"
+      v-show="this.fadeOutIsDisplay"
     ></div>
     <!-- <div id="cover" v-bind:class="classObject"></div> -->
   </div>
@@ -37,12 +38,12 @@ export default {
     this.fadeoutLay();
   },
   computed: {
-    ...mapState(["fadeOutIsActive"]),
+    ...mapState(["fadeOutIsActive", "fadeOutIsDisplay"]),
   },
   methods: {
-    ...mapMutations(["RECORD_FACEOUT_Active"]),
+    ...mapMutations(["RECORD_FACEOUT_ACTIVE"]),
     fadeoutLay: function() {
-      this.RECORD_FACEOUT_Active(true);
+      this.RECORD_FACEOUT_ACTIVE(true);
       this.isActive = this.fadeOutIsActive;
     },
   },
