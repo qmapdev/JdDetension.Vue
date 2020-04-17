@@ -1,1 +1,2 @@
 export const GET_CONCERNED_POINT = 'GET_CONCERNED_POINT'
+export const RECORD_FACEOUT_Active = 'RECORD_FACEOUT_Active'

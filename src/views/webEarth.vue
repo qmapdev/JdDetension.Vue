@@ -1,26 +1,32 @@
 <template>
-  <div id="cesiumContainer" class="cesiumViewer"></div>
+  <div>
+    <div class="cesiumViewer" id="cesiumContainer"></div>
+    <!-- <el-button class="enter-btn" type="primary">print</el-button> -->
+    <el-button class="enter-btn" :type="primay" round :size="medium" @click="flytoDestination">登录</el-button>
+  </div>
 </template>
 
 <script type="text/javascript">
 import {
-  Cesium3DTileset,
+  Cesium,
+  // Cesium3DTileset,
   EllipsoidTerrainProvider,
-  createWorldTerrain,
-  IonResource,
+  // createWorldTerrain,
+  // IonResource,
   Viewer,
   Clock,
   WebMapTileServiceImageryProvider,
   createDefaultImageryProviderViewModels,
   Cartesian3,
-  Rectangle,
-  UrlTemplateImageryProvider,
-  ArcGisMapServerImageryProvider,
-  BingMapsImageryProvider,
-  createTileMapServiceImageryProvider,
-  BingMapsStyle
+  // Rectangle,
+  UrlTemplateImageryProvider
+  // ArcGisMapServerImageryProvider,
+  // BingMapsImageryProvider,
+  // createTileMapServiceImageryProvider,
+  // BingMapsStyle
 } from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
+import Router from "../router/index.js";
 //指北针插件
 // import CesiumNavigation from "cesium-navigation-es6";
 //打印插件
@@ -110,24 +116,27 @@ export default {
       //   //指北针插件
       //   self.initNavigation();
       //初始地图高清
-      self.changeBaseMap("gg");
+      self.changeBaseMap("tdt");
 
-      var dateV = Date.now();
-      viewer.clock.onTick.addEventListener(self.rotate(dateV));
-      setTimeout(function() {
-        viewer.clock.onTick.removeEventListener(self.rotate(dateV));
-      }, 5000);
+      viewer.scene.postUpdate.addEventListener(self.icrf());
     },
-    rotate(dateV) {
-      var a = 0.1;
-      var t = Date.now();
-      var n = (t - dateV) / 1e3;
-      dateV = t;
-      viewer.scene.camera.rotate(Cesium.Cartesian3.UNIT_Z, -a * n);
+
+    icrf(scene, time) {
+      if (scene.mode !== Cesium.SceneMode.SCENE3D) {
+        return;
+      }
+      var icrfToFixed = Cesium.Transforms.computeIcrfToFixedMatrix(time);
+      if (Cesium.defined(icrfToFixed)) {
+        var camera = viewer.camera;
+        var offset = Cesium.Cartesian3.clone(camera.position);
+        var transform = Cesium.Matrix4.fromRotationTranslation(icrfToFixed);
+        camera.lookAtTransform(transform, offset);
+      }
     },
-    /** 
-     * 中国坐标 
-    */
+
+    /**
+     * 中国坐标
+     */
     getChinaPostion() {
       return Cartesian3.fromDegrees(116.435314, 40.960521, 17000000.0);
     },
@@ -140,6 +149,71 @@ export default {
         duration: 8
       });
     },
+
+    flytoDestination() {
+      viewer.camera.flyTo({
+        destination: self.getChinaPostion(),
+        duration: 1,
+        complete: function() {
+          viewer.camera.flyTo({
+            destination: Cartesian3.fromDegrees(
+              121.46910123,
+              31.23688513,
+              230000
+            ),
+            duration: 5,
+            complete: function() {
+              viewer.camera.flyTo({
+                destination: Cartesian3.fromDegrees(
+                  121.23256607352765,
+                  31.40357199207503,
+                  1000.0
+                ),
+                duration: 4,
+                complete: function() {
+                  Router.push({ path: "/home" });
+                }
+              });
+            }
+          });
+        }
+      });
+      // viewer.camera.flyTo({
+      //   destination: Cartesian3.fromDegrees(121.2370084, 31.4016163, 6500.0),
+      //   duration: 5,
+      //   complete: function() {
+      //     viewer.camera.flyTo({
+      //       destination: Cartesian3.fromDegrees(
+      //         121.23256607352765,
+      //         31.40357199207503,
+      //         500.0
+      //       ),
+      //       duration: 5,
+      //       complete: function() {
+      //         Router.push({ path: "/home" });
+      //       }
+      //     });
+      //   }
+      // });
+
+      // var camera = scene.camera;
+      // camera.flyTo({
+      //     destination : Cartesian3.fromDegrees(-73.98580932617188, 40.74843406689482, 363.34038727246224),
+      //     complete : function() {
+      //         setTimeout(function() {
+      //             camera.flyTo({
+      //                 destination : Cartesian3.fromDegrees(-73.98585975679403, 40.75759944127251, 186.50838555841779),
+      //                 orientation : {
+      //                     heading : Cesium.Math.toRadians(200.0),
+      //                     pitch : Cesium.Math.toRadians(-50.0)
+      //                 },
+      //                 easingFunction : Cesium.EasingFunction.LINEAR_NONE
+      //             });
+      //         }, 1000);
+      //     }
+      // });
+    },
+
     /**
      * 切换地图
      */
@@ -150,13 +224,14 @@ export default {
           viewer.imageryLayers.addImageryProvider(
             new WebMapTileServiceImageryProvider({
               url:
-                "https://t0.tianditu.com/img_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=93d1fdef41f93d2211deed6d22780c48",
-              layer: "tdtBasicLayer",
+                "http://t0.tianditu.com/img_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=e378319b5250eff0fdd562f3aa190e62",
+              layer: "img",
               style: "default",
-              format: "image/jpeg",
-              tileMatrixSetID: "GoogleMapsCompatible",
-              show: false,
-              maximumLevel: 16
+              format: "tiles",
+              tileMatrixSetID: "w",
+              subdomains: ["t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7"],
+              maximumLevel: 18,
+              show: true
             })
           );
           break;
@@ -207,6 +282,13 @@ export default {
             })
           );
           break;
+        case "gd":
+          viewer.imageryLayers.addImageryProvider(
+            new UrlTemplateImageryProvider({
+              url:
+                "http://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}"
+            })
+          );
       }
       //全球影像中文注记服务
       viewer.imageryLayers.addImageryProvider(
@@ -240,8 +322,15 @@ export default {
 .cesiumViewer {
   width: 100%;
   height: 100%;
+  margin: 0;
+  padding: 0;
   background: #333;
   position: absolute;
   overflow: hidden;
+}
+.enter-btn {
+  position: absolute;
+  bottom: 100px;
+  right: 100px;
 }
 </style>
