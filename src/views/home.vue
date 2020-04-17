@@ -3,8 +3,11 @@
     <Header />
     <Footer />
     <Menu />
-    <div id="cover" v-bind:class="['FadeOutFrame', { 'fadeout': this.isActive }]"></div>
-        <!-- <div id="cover" v-bind:class="classObject"></div> -->
+    <div
+      id="cover"
+      v-bind:class="['FadeOutFrame', { fadeout: this.isActive }]"
+    ></div>
+    <!-- <div id="cover" v-bind:class="classObject"></div> -->
   </div>
 </template>
 
@@ -19,30 +22,30 @@ export default {
   components: {
     Header,
     Footer,
-    Menu
+    Menu,
   },
   data() {
     return {
       isActive: false,
       classObject: {
-        'FadeOutFrame': true,
-        'fadeout': this.isActive
-      }
+        FadeOutFrame: true,
+        fadeout: this.isActive,
+      },
     };
   },
   mounted() {
     this.fadeoutLay();
   },
   computed: {
-    ...mapState(["fadeOutIsActive"])
+    ...mapState(["fadeOutIsActive"]),
   },
   methods: {
     ...mapMutations(["RECORD_FACEOUT_Active"]),
     fadeoutLay: function() {
       this.RECORD_FACEOUT_Active(true);
       this.isActive = this.fadeOutIsActive;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -70,7 +73,7 @@ export default {
   position: absolute;
   opacity: 0.5;
   /* z-index: 2; */
-    -webkit-transition: all 3s;
+  -webkit-transition: all 3s;
   -moz-transition: all 3s;
   -ms-transition: all 3s;
   -o-transition: all 3s;
@@ -78,7 +81,6 @@ export default {
 }
 
 .FadeOutFrame.fadeout {
-
   opacity: 0;
   /* display: none; */
 }

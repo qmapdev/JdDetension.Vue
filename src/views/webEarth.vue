@@ -2,7 +2,9 @@
   <div>
     <div class="cesiumViewer" id="cesiumContainer"></div>
     <!-- <el-button class="enter-btn" type="primary">print</el-button> -->
-    <el-button class="enter-btn" :type="primay" round :size="medium" @click="flytoDestination">登录</el-button>
+    <el-button class="enter-btn" round @click="flytoDestination"
+      >登录</el-button
+    >
   </div>
 </template>
 
@@ -19,7 +21,7 @@ import {
   createDefaultImageryProviderViewModels,
   Cartesian3,
   // Rectangle,
-  UrlTemplateImageryProvider
+  UrlTemplateImageryProvider,
   // ArcGisMapServerImageryProvider,
   // BingMapsImageryProvider,
   // createTileMapServiceImageryProvider,
@@ -52,7 +54,7 @@ export default {
     self.$notify({
       title: "",
       message: " cesium plugin demo ！",
-      type: "success"
+      type: "success",
     });
     self.init();
   },
@@ -94,9 +96,9 @@ export default {
         contextOptions: {
           id: "cesiumCanvas",
           webgl: {
-            preserveDrawingBuffer: true
-          }
-        } //传递给Scene对象的上下文参数（scene.options）
+            preserveDrawingBuffer: true,
+          },
+        }, //传递给Scene对象的上下文参数（scene.options）
         // sceneMode: Cesium.SceneMode.SCENE3D, //初始场景模式
         // mapProjection: new Cesium.WebMercatorProjection(), //地图投影体系
         // dataSources: new Cesium.DataSourceCollection()
@@ -118,21 +120,21 @@ export default {
       //初始地图高清
       self.changeBaseMap("tdt");
 
-      viewer.scene.postUpdate.addEventListener(self.icrf());
+      // viewer.scene.postUpdate.addEventListener(self.icrf());
     },
 
-    icrf(scene, time) {
-      if (scene.mode !== Cesium.SceneMode.SCENE3D) {
-        return;
-      }
-      var icrfToFixed = Cesium.Transforms.computeIcrfToFixedMatrix(time);
-      if (Cesium.defined(icrfToFixed)) {
-        var camera = viewer.camera;
-        var offset = Cesium.Cartesian3.clone(camera.position);
-        var transform = Cesium.Matrix4.fromRotationTranslation(icrfToFixed);
-        camera.lookAtTransform(transform, offset);
-      }
-    },
+    // icrf(scene, time) {
+    //   if (scene.mode !== Cesium.SceneMode.SCENE3D) {
+    //     return;
+    //   }
+    //   var icrfToFixed = Cesium.Transforms.computeIcrfToFixedMatrix(time);
+    //   if (Cesium.defined(icrfToFixed)) {
+    //     var camera = viewer.camera;
+    //     var offset = Cesium.Cartesian3.clone(camera.position);
+    //     var transform = Cesium.Matrix4.fromRotationTranslation(icrfToFixed);
+    //     camera.lookAtTransform(transform, offset);
+    //   }
+    // },
 
     /**
      * 中国坐标
@@ -146,7 +148,7 @@ export default {
     flytochina() {
       viewer.camera.flyTo({
         destination: self.getChinaPostion(),
-        duration: 8
+        duration: 8,
       });
     },
 
@@ -172,11 +174,11 @@ export default {
                 duration: 4,
                 complete: function() {
                   Router.push({ path: "/home" });
-                }
+                },
               });
-            }
+            },
           });
-        }
+        },
       });
       // viewer.camera.flyTo({
       //   destination: Cartesian3.fromDegrees(121.2370084, 31.4016163, 6500.0),
@@ -231,7 +233,7 @@ export default {
               tileMatrixSetID: "w",
               subdomains: ["t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7"],
               maximumLevel: 18,
-              show: true
+              show: true,
             })
           );
           break;
@@ -244,7 +246,7 @@ export default {
               style: "default",
               format: "image/jpeg",
               tileMatrixSetID: "GoogleMapsCompatible",
-              show: false
+              show: false,
             })
           );
           break;
@@ -260,7 +262,7 @@ export default {
             new ArcGisMapServerImageryProvider({
               url:
                 "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer",
-              enablePickFeatures: false
+              enablePickFeatures: false,
             })
           );
           break;
@@ -269,7 +271,7 @@ export default {
             new BingMapsImageryProvider({
               url: "https://dev.virtualearth.net",
               key: "get-yours-at-https://www.bingmapsportal.com/",
-              mapStyle: BingMapsStyle.AERIAL
+              mapStyle: BingMapsStyle.AERIAL,
             })
           );
           break;
@@ -278,7 +280,7 @@ export default {
             new createTileMapServiceImageryProvider({
               url: "https://cesiumjs.org/blackmarble",
               credit: "Black Marble imagery courtesy NASA Earth Observatory",
-              flipXY: true // Only old gdal2tile.py generated tilesets need this flag.
+              flipXY: true, // Only old gdal2tile.py generated tilesets need this flag.
             })
           );
           break;
@@ -286,39 +288,39 @@ export default {
           viewer.imageryLayers.addImageryProvider(
             new UrlTemplateImageryProvider({
               url:
-                "http://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}"
+                "http://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}",
             })
           );
       }
       //全球影像中文注记服务
-      viewer.imageryLayers.addImageryProvider(
-        new WebMapTileServiceImageryProvider({
-          url:
-            "https://t0.tianditu.com/cia_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cia&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default.jpg&tk=93d1fdef41f93d2211deed6d22780c48",
-          layer: "tdtAnnoLayer",
-          style: "default",
-          format: "image/jpeg",
-          tileMatrixSetID: "GoogleMapsCompatible",
-          show: false
-        })
-      );
-      //全球矢量中文标注服务
-      viewer.imageryLayers.addImageryProvider(
-        new WebMapTileServiceImageryProvider({
-          url:
-            "https://t0.tianditu.com/cva_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cva&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default.jpg&tk=93d1fdef41f93d2211deed6d22780c48",
-          layer: "tdtAnnoLayer",
-          style: "default",
-          format: "image/jpeg",
-          tileMatrixSetID: "GoogleMapsCompatible"
-        })
-      );
-    }
-  }
+      // viewer.imageryLayers.addImageryProvider(
+      //   new WebMapTileServiceImageryProvider({
+      //     url:
+      //       "https://t0.tianditu.com/cia_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cia&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default.jpg&tk=93d1fdef41f93d2211deed6d22780c48",
+      //     layer: "tdtAnnoLayer",
+      //     style: "default",
+      //     format: "image/jpeg",
+      //     tileMatrixSetID: "GoogleMapsCompatible",
+      //     show: false
+      //   })
+      // );
+      // //全球矢量中文标注服务
+      // viewer.imageryLayers.addImageryProvider(
+      //   new WebMapTileServiceImageryProvider({
+      //     url:
+      //       "https://t0.tianditu.com/cva_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cva&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default.jpg&tk=93d1fdef41f93d2211deed6d22780c48",
+      //     layer: "tdtAnnoLayer",
+      //     style: "default",
+      //     format: "image/jpeg",
+      //     tileMatrixSetID: "GoogleMapsCompatible"
+      //   })
+      // );
+    },
+  },
 };
 </script>
 
-<style  scoped>
+<style scoped>
 .cesiumViewer {
   width: 100%;
   height: 100%;
