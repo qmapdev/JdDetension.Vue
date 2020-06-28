@@ -16,9 +16,11 @@
           <div class="admin-pic"></div>
           <div class="admin-name">admin</div>
         </button>
-        <button class="header-cancel">
-          <div></div>
-        </button>
+        <router-link :to="{ path: '/webEarth' }">
+          <button class="header-cancel" @click="flytoPos">
+            <div></div>
+          </button>
+        </router-link>
       </div>
     </div>
 
@@ -44,20 +46,26 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { flytoDefaultPos, keepingFlytoPos } from "../../js/header.js";
+import { mapState, mapMutations, mapActions } from "vuex";
+
 export default {
   data() {
     return {};
   },
   mounted() {
-    //获取兴趣点信息
-    // this.getConcernedPoints();
+    keepingFlytoPos();
   },
   computed: {
-    ...mapState(["concernedPoints"])
+    ...mapState(["concernedPoints", "fadeOutIsActive"]),
   },
   methods: {
-    ...mapActions(["getConcernedPoints"])
-  }
+    // ...mapActions(["getConcernedPoints",""]),
+    ...mapMutations(["RECORD_FACEOUT_ACTIVE"]),
+    flytoPos: function() {
+      this.RECORD_FACEOUT_ACTIVE(false);
+      flytoDefaultPos();
+    },
+  },
 };
 </script>

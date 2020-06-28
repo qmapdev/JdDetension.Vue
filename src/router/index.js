@@ -5,6 +5,7 @@ import home from "../views/home.vue";
 import concernedPoint from "../views/modules/concernedPoint.vue";
 import deviceList from "../views/modules/deviceList.vue";
 import sceneBrowsing from "../views/modules/sceneBrowsing.vue";
+import webEarth from "../views/webEarth.vue";
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,10 @@ const routes = [
       {
         path: "/home",
         component: home
+      },
+      {
+        path: "/webEarth",
+        component: webEarth
       },
       {
         path: "/sceneBrowsing",
